@@ -1,0 +1,117 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <h>Your file is successfully uploaded!.</h>
+  
+  <html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>GFG User Details</title>
+
+	<!-- INCLUDING JQUERY-->
+	<script src=
+"https://code.jquery.com/jquery-3.5.1.js">
+	</script>
+
+	<!-- CSS FOR STYLING THE PAGE -->
+	<style>
+		table {
+			margin: 0 auto;
+			font-size: large;
+			border: 1px solid black;
+		}
+
+		h1 {
+			text-align: center;
+			color: #006600;
+			font-size: xx-large;
+			font-family: 'Gill Sans',
+				'Gill Sans MT', ' Calibri',
+				'Trebuchet MS', 'sans-serif';
+		}
+
+		td {
+			background-color: #E4F5D4;
+			border: 1px solid black;
+		}
+
+		th,
+		td {
+			font-weight: bold;
+			border: 1px solid black;
+			padding: 10px;
+			text-align: center;
+		}
+
+		td {
+			font-weight: lighter;
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		<h1>DATA in the file</h1>
+
+		<!-- TABLE CONSTRUCTION-->
+		<table id='table'>
+			<!-- HEADING FORMATION -->
+			<tr>
+				<th>UserId</th>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Body</th>
+			</tr>
+
+			<script>
+				$(document).ready(function () {
+
+					// FETCHING DATA FROM JSON FILE
+					$.getJSON("data (4) (3) (1).json.",
+							function (data) {
+						var dat = '';
+
+						// ITERATING THROUGH OBJECTS
+						$.each(data, function (key, value) {
+
+							//CONSTRUCTION OF ROWS HAVING
+							// DATA FROM JSON OBJECT
+							dat += '<tr>';
+							dat += '<td>' +
+								value.UserId + '</td>';
+
+							dat += '<td>' +
+								value.Id + '</td>';
+
+							dat += '<td>' +
+								value.Title + '</td>';
+
+							dat += '<td>' +
+								value.Body + '</td>';
+
+							dat += '</tr>';
+						});
+						
+						//INSERTING ROWS INTO TABLE
+						$('#table').append(dat);
+					});
+				});
+			</script>
+	</section>
+</body>
+
+</html>
+
+
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
